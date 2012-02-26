@@ -1,0 +1,38 @@
+{
+  "name": "jQuery.ajaxMock",
+  "version": "1.0",
+  "title": "jQuery.ajaxMock - a tiny but yet powerful mocking plugin for jQuery 1.5+",
+  "author": {
+        "name": "Martin Krause",
+        "url": "https://github.com/martinkr"
+    },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.gnu.org/licenses/gpl-3.0.html",
+    },
+    {
+      "type": "GPL-3.0",
+      "url": "http://www.opensource.org/licenses/MIT",
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.5"
+  },
+  "description": "jQuery.ajaxMock is a tiny but yet powerful mocking plugin for jQuery 1.5+",
+
+  "keywords": [
+    "ajax",
+    "mock",
+    "test-driven",
+    "behaviour-driven",
+    "jUnit",
+    "jasmine",
+    "spec"
+  ],
+  "homepage": "https://github.com/martinkr/jQuery.ajaxMock",
+  "files": [
+    "jquery.ajaxmock.js",
+    "jquery.ajaxmock.min.js",
+  ]
+}
