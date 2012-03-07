@@ -4,7 +4,7 @@
  *
  * jQuery.ajaxMock is a tiny but yet powerful mocking plugin for jQuery 1.5+.
  *
- * @Version: 1.0
+ * @Version: 1.1
  *
  * @example:
  *
@@ -13,7 +13,8 @@
  *   jQuery.ajaxMock.register('http://example.com', {
  *         responseText:'responseFoo',
  *         statusCode:200,
- *         status:'OK'
+ *         status:'OK',
+ *         delay: 1000 // optional
  *       }
  *  );
  *
@@ -109,17 +110,18 @@
           return {
             // override jquery's send()
             send: function( _ , fnCb_ ) {
+              // grab mock by url
+              var _oOpt = $.ajaxMock.getObject(_sUrl);
               // implement own done()
               function done() {
-                  // grab mock by url
-                  var _oOpt = $.ajaxMock.getObject(_sUrl);
                   // set last mocked object to current
                   $.ajaxMock.last(_sUrl);
                   // pass manipulated response to $.ajax's callbacks
                   fnCb_( (_oOpt.statusCode || 200 ),( _oOpt.status || 'OK'),{'text': (_oOpt.responseText || '' )});
               }
-              // proceed with $.ajax
-              done();
+              // proceed with $.ajax, implement delay
+              if(_oOpt.delay) { window.setTimeout(done,_oOpt.delay); }
+              else { done(); }
             }
           };
         }

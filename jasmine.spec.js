@@ -41,6 +41,14 @@ describe('jQuery.ajaxMock ', function() {
         status:'OK'
       };
 
+      _oItemFooDelay = {
+        sUrl:'item/foo/delay',
+        responseText:'responseFooDelay',
+        statusCode:200,
+        status:'OK',
+        delay: 1000
+      };
+
   });
 
   afterEach(function() {
@@ -152,7 +160,7 @@ describe('jQuery.ajaxMock ', function() {
 
   });
 
-  /**
+   /**
    * Mock call
    */
    it('should mock xhr-requests to registered urls',function () {
@@ -222,6 +230,46 @@ describe('jQuery.ajaxMock ', function() {
         // called "/", last mocked call is still _oItemBar.sUrl
         expect( _fnSpy.mostRecentCall.object.url).toBe('/');
         expect(jQuery.ajaxMock.last().url).toBe(_oItemBar.sUrl);
+      });
+
+  });
+
+
+ /**
+   * Mock call
+   */
+   it('should delay a mock xhr-requests',function () {
+
+      var _fnSpy ;
+
+      runs(function() {
+        expect( $.ajaxMock.isRegistered(_oItemFooDelay.sUrl) ).toBeFalsy();
+        jQuery.ajaxMock.register(_oItemFooDelay.sUrl,_oItemFooDelay);
+      });
+
+      waits(500);
+
+      // mocked _oItemFooDelay
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemFooDelay.sUrl,success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).not.toHaveBeenCalled();
+        expect(jQuery.ajaxMock.last().url).not.toBe(_oItemFooDelay.sUrl);
+      });
+
+      waits(1000);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemFooDelay.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemFooDelay.sUrl);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
       });
 
   });
