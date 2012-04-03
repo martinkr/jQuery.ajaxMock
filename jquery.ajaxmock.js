@@ -44,7 +44,10 @@
 
     // registered Mocks
     var _oMocks = {};
-    var _oLast = {};
+    var _oLast = {
+        url:undefined,
+        type:undefined
+    };
 
     /**
      * Register mock objeckt
@@ -75,17 +78,21 @@
     };
 
     /**
-     * Flushes all registered mock objects
+     * Flushes all registered mock objects and the last call
      * @return {Void}
      */
     var _flush = function (){
-		_oMocks = {};
+      _oMocks = {};
+		  _oLast = {
+        url:undefined,
+        type:undefined
+      };
     };
 
     /**
      * Sets/Gets the last mocked response
      * @param  {String} [sKey_] Identifier, sets last called object if supplied
-     * @return {Object}
+     * @return {Object} {type : {String} || undefined, url : {String} || undefined}
      */
     var _last = function (sKey_) {
       if (sKey_) {

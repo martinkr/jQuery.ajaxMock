@@ -284,6 +284,7 @@ describe('jQuery.ajaxMock ', function() {
       runs(function() {
         expect( $.ajaxMock.isRegistered(_oItemFoo.sUrl) ).toBeFalsy();
         expect( $.ajaxMock.isRegistered(_oItemBar.sUrl) ).toBeFalsy();
+        expect( $.ajaxMock.last().url ).toBe(undefined);
 
         jQuery.ajaxMock.register(_oItemFoo.sUrl,_oItemFoo);
         $.ajaxMock.register(_oItemBar.sUrl,_oItemBar);
