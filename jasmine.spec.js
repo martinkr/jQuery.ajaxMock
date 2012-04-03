@@ -49,6 +49,54 @@ describe('jQuery.ajaxMock ', function() {
         delay: 1000
       };
 
+      _oItemRESTGET = {
+        sUrl:'item/REST/GET',
+        type: 'GET',
+        responseText:'responseRESTGET',
+        statusCode:200,
+        status:'OK'
+      };
+
+      _oItemRESTPOST = {
+        sUrl:'item/REST/POST',
+        type: 'POST',
+        responseText:'responseRESTPOST',
+        statusCode:200,
+        status:'OK'
+      };
+
+       _oItemRESTPUT = {
+        sUrl:'item/REST/PUT',
+        type: 'PUT',
+        responseText:'responseRESTPUT',
+        statusCode:200,
+        status:'OK'
+      };
+
+      _oItemRESTDELETE = {
+        sUrl:'item/REST/DELETE',
+        type: 'DELETE',
+        responseText:'responseRESTDELETE',
+        statusCode:200,
+        status:'OK'
+      };
+
+       _oItemRESTAPIONE = {
+        sUrl:'item/REST/API',
+        type: 'ONE',
+        responseText:'responseRESTAPIONE',
+        statusCode:200,
+        status:'OK'
+      };
+
+      _oItemRESTAPITWO = {
+        sUrl:'item/REST/API',
+        type: 'TWO',
+        responseText:'responseRESTAPITWO',
+        statusCode:200,
+        status:'OK'
+      };
+
   });
 
   afterEach(function() {
@@ -235,6 +283,218 @@ describe('jQuery.ajaxMock ', function() {
   });
 
 
+  /**
+   * Mock call
+   */
+   it('should mock xhr-requests to registered urls using a different HTTP request methods (GET,POST,PUT,DELETE)',function () {
+
+      var _fnSpy ;
+
+      runs(function() {
+        expect( $.ajaxMock.isRegistered(_oItemRESTGET.sUrl) ).toBeFalsy();
+        expect( $.ajaxMock.isRegistered(_oItemRESTPOST.sUrl) ).toBeFalsy();
+        expect( $.ajaxMock.isRegistered(_oItemRESTPUT.sUrl) ).toBeFalsy();
+        expect( $.ajaxMock.isRegistered(_oItemRESTDELETE.sUrl) ).toBeFalsy();
+
+
+        jQuery.ajaxMock.register(_oItemRESTGET.sUrl,_oItemRESTGET);
+        jQuery.ajaxMock.register(_oItemRESTPOST.sUrl,_oItemRESTPOST);
+        jQuery.ajaxMock.register(_oItemRESTPUT.sUrl,_oItemRESTPUT);
+        jQuery.ajaxMock.register(_oItemRESTDELETE.sUrl,_oItemRESTDELETE);
+
+      });
+
+      waits(500);
+
+      // mocked _oItemRESTGET
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTGET.sUrl,type: _oItemRESTGET.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTGET.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTGET.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTGET.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+
+      // mocked _oItemRESTPOST
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTPOST.sUrl,type: _oItemRESTPOST.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTPOST.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTPOST.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTPOST.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+      // mocked _oItemRESTPUT
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTPUT.sUrl,type: _oItemRESTPUT.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTPUT.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTPUT.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTPUT.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+       // mocked _oItemRESTDELETE
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTDELETE.sUrl,type: _oItemRESTDELETE.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTDELETE.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTDELETE.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTDELETE.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+  });
+
+   it('should mock xhr-requests to registered urls using the registered http request method and skip if the method is not registered',function () {
+
+      var _fnSpy ;
+
+      runs(function() {
+        expect( $.ajaxMock.isRegistered(_oItemRESTGET.sUrl) ).toBeFalsy();
+        expect( $.ajaxMock.isRegistered(_oItemRESTPOST.sUrl) ).toBeFalsy();
+
+        jQuery.ajaxMock.register(_oItemRESTGET.sUrl,_oItemRESTGET);
+        jQuery.ajaxMock.register(_oItemRESTPOST.sUrl,_oItemRESTPOST);
+      });
+
+      waits(500);
+
+      // mocked _oItemRESTGET
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTGET.sUrl,type: _oItemRESTGET.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTGET.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTGET.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTGET.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+
+      // mocked _oItemRESTPOST
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTPOST.sUrl,type: _oItemRESTPOST.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTPOST.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTPOST.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTPOST.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+      // mocked _oItemRESTGET with different method: ain't registered fail!
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTGET.sUrl,type: "MOCK" , error:_fnSpy});
+      });
+
+       waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).not.toBe(_oItemRESTGET.responseText);
+        expect(_fnSpy.argsForCall[0][1]).not.toBe("success");
+        expect(jQuery.ajaxMock.last().url).not.toBe(_oItemRESTGET.sUrl);
+        expect(jQuery.ajaxMock.last().type).not.toBe(_oItemRESTGET.type);
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTPOST.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTPOST.type);
+        expect( _fnSpy.mostRecentCall.object.url).not.toBe(jQuery.ajaxMock.last().url);
+      });
+
+  });
+
+
+  it('should mock xhr-requests to one urls using different http request methods',function () {
+
+      var _fnSpy ;
+
+      runs(function() {
+        expect( $.ajaxMock.isRegistered(_oItemRESTAPIONE.sUrl) ).toBeFalsy();
+        expect( $.ajaxMock.isRegistered(_oItemRESTAPITWO.sUrl) ).toBeFalsy();
+        jQuery.ajaxMock.register(_oItemRESTAPIONE.sUrl,_oItemRESTAPIONE);
+        jQuery.ajaxMock.register(_oItemRESTAPITWO.sUrl,_oItemRESTAPITWO);
+      });
+
+    // mocked _oItemRESTAPI, method 'ONE'
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTAPIONE.sUrl,type: _oItemRESTAPIONE.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTAPIONE.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTAPIONE.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTAPIONE.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+      // mocked _oItemRESTAPI, method 'TWO'
+      runs(function() {
+        _fnSpy= jasmine.createSpy('callback');
+        $.ajax({url:_oItemRESTAPITWO.sUrl,type: _oItemRESTAPITWO.type, success:_fnSpy});
+      });
+
+      waits(500);
+
+      runs(function() {
+        expect(_fnSpy).toHaveBeenCalled();
+        expect(_fnSpy.argsForCall[0][0]).toBe(_oItemRESTAPITWO.responseText);
+        expect(_fnSpy.argsForCall[0][1]).toBe("success");
+        expect(jQuery.ajaxMock.last().url).toBe(_oItemRESTAPITWO.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemRESTAPITWO.type);
+        expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
+      });
+
+
+  });
+
  /**
    * Mock call
    */
@@ -306,6 +566,7 @@ describe('jQuery.ajaxMock ', function() {
 
         expect( _fnSpy.mostRecentCall.object.url).toBe(jQuery.ajaxMock.last().url);
         expect(jQuery.ajaxMock.last().url).toBe(_oItemBar.sUrl);
+        expect(jQuery.ajaxMock.last().type).toBe(_oItemBar.type);
         expect(jQuery.ajaxMock.last().responseText).toBe(_oItemBar.responseText);
         expect(jQuery.ajaxMock.last().statusCode).toBe(_oItemBar.statusCode);
       });

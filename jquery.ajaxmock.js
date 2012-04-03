@@ -4,16 +4,17 @@
  *
  * jQuery.ajaxMock is a tiny but yet powerful mocking plugin for jQuery 1.5+.
  *
- * @Version: 1.1
+ * @Version: 1.2
  *
  * @example:
  *
  *   Register your mock object:
- *   // jQuery.ajaxMock.register( URL ,  {reponseText: "{String} Mocked responseText", statusCode: "{Number} Mocked status code", status: "{String} Mocked status description"}
+ *   // jQuery.ajaxMock.register( URL ,  {reponseText: "{String} Mocked responseText", statusCode: "{Number} Mocked status code", status: "{String} Mocked status description", type: "{String} http request method"}
  *   jQuery.ajaxMock.register('http://example.com', {
  *         responseText:'responseFoo',
  *         statusCode:200,
  *         status:'OK',
+ *         type: 'POST', // optional, takes a String as http request method default: 'GET'
  *         delay: 1000 // optional
  *       }
  *  );
@@ -48,15 +49,27 @@
         url:undefined,
         type:undefined
     };
+    // default http request method
+    var _sTypeDefault = 'GET';
+
+  /**
+   * Creates a unique identifier using the url and the http request method
+   * @param  {String} sKey_  Url
+   * @param  {String} [sType_] http request method, default: _sTypeDefault
+   * @return {String}  identifier method++url, e.g.: GET http://examaple.org => "GET%2B%2Bhttp%3A%2F%2Fexample.org"
+   */
+    var _normalizeKey = function(sKey_,sType_) {
+      return encodeURIComponent([(sType_ ||_sTypeDefault),'++',sKey_].join(''));
+    };
 
     /**
      * Register mock objeckt
      * @param  {String} sKey_     URL to mock
-     * @param  {Object} oOptions_ Mocked response {statusCode:{Number} HTTP status code, status: {String}, responseText: {String}, responseXML: {String} }
+     * @param  {Object} oOptions_ Mocked response {statusCode:{Number} HTTP status code, status: {String}, responseText: {String}, responseXML: {String}, type: {String} }
      * @return {Void}
      */
     var _register = function (sKey_,oOptions_) {
-      _oMocks[encodeURIComponent(sKey_)] = oOptions_;
+      _oMocks[_normalizeKey(sKey_,oOptions_.type )] = oOptions_;
     };
 
     /**
@@ -64,8 +77,8 @@
      * @param  {String} sKey_ URL
      * @return {Object} {statusCode:{Number} HTTP status code, status: {String}, responseText: {String}, responseXML: {String} }
      */
-    var _getObject = function (sKey_) {
-        return _oMocks[encodeURIComponent(sKey_)];
+    var _getObject = function (sKey_,sType_) {
+        return _oMocks[_normalizeKey(sKey_,sType_)];
     };
 
     /**
@@ -73,8 +86,13 @@
      * @param  {String}  sKey_ URL
      * @return {Boolean}
      */
-    var _isRegistered = function (sKey_) {
-      return !!_oMocks[encodeURIComponent(sKey_)];
+    var _isRegistered = function (sKey_,sType_) {
+      // var _obj = _oMocks[encodeURIComponent(sKey_)];
+      // var sType_ = sType_ || _sTypeDefault;
+      // if (!!_obj) {
+      //   return (_obj.type === sType_);
+      // }
+      return !!_oMocks[_normalizeKey(sKey_,sType_)];
     };
 
     /**
@@ -94,10 +112,12 @@
      * @param  {String} [sKey_] Identifier, sets last called object if supplied
      * @return {Object} {type : {String} || undefined, url : {String} || undefined}
      */
-    var _last = function (sKey_) {
+    var _last = function (sKey_,sType_) {
       if (sKey_) {
-        _oLast = _getObject(sKey_);
+        var _sType = sType_ || _sTypeDefault;
+        _oLast = _getObject(sKey_,_sType);
         _oLast.url = sKey_;
+        _oLast.type =_sType;
       }
       return _oLast;
     };
@@ -111,20 +131,20 @@
       $.ajaxTransport( "+*", function(  options_  ) {
 
         var _sUrl = options_.url;
+        var _sType = options_.type || _sTypeDefault;
         //if there's a registered mock object for this url: return mock object
-        if( $.ajaxMock.isRegistered(_sUrl) ) {
-
+        if( $.ajaxMock.isRegistered(_sUrl,_sType) ) {
           return {
             // override jquery's send()
             send: function( _ , fnCb_ ) {
               // grab mock by url
-              var _oOpt = $.ajaxMock.getObject(_sUrl);
+              var _oOpt = $.ajaxMock.getObject(_sUrl,_sType);
               // implement own done()
               function done() {
                   // set last mocked object to current
-                  $.ajaxMock.last(_sUrl);
+                  $.ajaxMock.last(_sUrl,_sType);
                   // pass manipulated response to $.ajax's callbacks
-                  fnCb_( (_oOpt.statusCode || 200 ),( _oOpt.status || 'OK'),{'text': (_oOpt.responseText || '' )});
+                  fnCb_( (_oOpt.statusCode || 200 ),( _oOpt.status || 'OK'),{'text': (_oOpt.responseText || '' ),'type': _sType});
               }
               // proceed with $.ajax, implement delay
               if(_oOpt.delay) { window.setTimeout(done,_oOpt.delay); }
