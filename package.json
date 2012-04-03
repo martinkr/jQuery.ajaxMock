@@ -1,6 +1,6 @@
 {
   "name": "jQuery.ajaxMock",
-  "version": "1.0",
+  "version": "1.2",
   "title": "jQuery.ajaxMock - a tiny but yet powerful mocking plugin for jQuery 1.5+",
   "author": {
         "name": "Martin Krause",
