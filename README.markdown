@@ -3,18 +3,22 @@
 jQuery.ajaxMock is a tiny yet powerful mocking plugin for jQuery 1.5+
 Just register a fake response  (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response. Keep in mind that no real XHRrequests will be made.
 ## Example
- Register your mock object:
- // jQuery.ajaxMock.register( URL ,  {reponseText: "{String} Mocked responseText", statusCode: "{Number} Mocked status code", status: "{String} Mocked status description"}
- jQuery.ajaxMock.register('http://example.com',
- 	// mocked response
- 	{
-      responseText:'responseFoo',
-      statusCode:200,
-      status:'OK'
-    }
-);
+<code>
+    Register your mock object:
+    // jQuery.ajaxMock.register( URL ,  {reponseText: "{String} Mocked responseText", statusCode: "{Number} Mocked status code", status: "{String} Mocked status description", type: "{String} http request method"}
+    jQuery.ajaxMock.register('http://example.com', {
+          responseText:'responseFoo',
+          statusCode:200,
+          status:'OK',
+          type: 'POST', // optional, takes a String as http request method default: 'GET'
+          delay: 1000 // optional
+        }
+   );
+</code>
+And all $.ajax-calls to 'http://example.com' will return the mocked response.
+
 ## Requires
- * jQuery JavaScript Library 1.5+ - http://jquery.com/; Copyright 2010, John Resig; Dual licensed under the MIT or GPL Version 2 licenses - http://jquery.org/license
+* jQuery JavaScript Library 1.5+ - http://jquery.com/; Copyright 2010, John Resig; Dual licensed under the MIT or GPL Version 2 licenses - http://jquery.org/license
 
 ## License
 Dual licensed under the MIT and GPL licenses.
