@@ -1,4 +1,4 @@
-<a name="README">[jQuery.ajaxMoc](https://github.com/martinkr/jQuery.ajaxMoc)</a>
+<a name="README">[jQuery.ajaxMock](https://github.com/martinkr/jQuery.ajaxMock)</a>
 =======
 jQuery.ajaxMock is a tiny yet powerful mocking plugin for jQuery 1.5+
 Just register a fake response  (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response. Keep in mind that no real XHRrequests will be made.
