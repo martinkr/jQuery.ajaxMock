@@ -4,7 +4,7 @@
  *
  * jQuery.ajaxMock is a tiny but yet powerful mocking plugin for jQuery 1.5+.
  *
- * @Version: 1.2
+ * @Version: 1.2.0
  *
  * @example:
  *
@@ -21,7 +21,7 @@
  *
  *  And all $.ajax-calls to 'http://example.com' will return the mocked response.
  *
- * Copyright (c) 2010-2012 Martin Krause (jquery.public.mkrause.info)
+ * Copyright (c) 2012 Martin Krause (jquery.public.mkrause.info)
  * Dual licensed under the MIT and GPL licenses.
  *
  * @author Martin Krause public@mkrause.info

@@ -1,7 +1,11 @@
 <a name="README">[jQuery.ajaxMock](https://github.com/martinkr/jQuery.ajaxMock)</a>
 =======
 jQuery.ajaxMock is a tiny yet powerful mocking plugin for jQuery 1.5+
-Just register a fake response  (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response. Keep in mind that no real XHRrequests will be made.
+Just register a fake response  (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response.
+Keep in mind that no real XHRrequests will be made.
+
+Works like a charm with Jasmine (http://pivotal.github.com/jasmine/) the a behavior-driven development framework for testing JavaScript code.
+
 ## Example
 <pre>
     Register your mock object:
@@ -33,4 +37,4 @@ Dual licensed under the MIT and GPL licenses.
 * MIT - http://www.opensource.org/licenses/mit-license.php
 * GNU - http://www.gnu.org/licenses/gpl-3.0.html
 
-Copyright (c) 2010-2012 Martin Krause (jquery.public.mkrause.info)
+Copyright (c) 2012 Martin Krause (jquery.public.mkrause.info)
