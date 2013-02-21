@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
 
-  <title>martinkr/jQuery.ajaxMock @ GitHub</title>
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #e14251;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #1ebdae; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #1ebdae; }
-    h3 { text-align: center; color: #1ebdae; }
-    a { color: #1ebdae; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Jquery.ajaxmock by martinkr</title>
+  </head>
 
-<body>
-  <a href="https://github.com/martinkr/jQuery.ajaxMock"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  <body>
+    <a id="forkme_banner" href="https://github.com/martinkr/jQuery.ajaxMock">View on GitHub</a>
+    <div class="shell">
 
-  <div id="container">
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Jquery.ajaxmock</h1>
+            <h2>A tiny yet powerful mocking plugin for jQuery 1.5+</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
 
-    <div class="download">
-      <a href="https://github.com/martinkr/jQuery.ajaxMock/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/martinkr/jQuery.ajaxMock/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/martinkr/jQuery.ajaxMock/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/martinkr/jQuery.ajaxMock/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a name="README"></a><a href="https://github.com/martinkr/jQuery.ajaxMock">jQuery.ajaxMock</a>
+</h1>
+
+<p>jQuery.ajaxMock is a tiny yet powerful mocking plugin for jQuery 1.5+
+Just register a fake response  (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response.
+Keep in mind that no real XHRrequests will be made.</p>
+
+<p>Works like a charm with Jasmine (<a href="http://pivotal.github.com/jasmine/">http://pivotal.github.com/jasmine/</a>) the a behavior-driven development framework for testing JavaScript code.</p>
+
+<h2>Example</h2>
+
+<pre>
+    Register your mock object:
+    /*
+     jQuery.ajaxMock.register( URL , {
+        reponseText: "{String} Mocked responseText",
+        statusCode: "{Number} Mocked status code",
+        status: "{String} Mocked status description",
+        type: "{String} http request method"
+     })
+     */
+    jQuery.ajaxMock.register('http://example.com', {
+          responseText:'responseFoo',
+          statusCode:200,
+          status:'OK',
+          type: 'POST', // optional, takes a String as http request method default: 'GET'
+          delay: 1000 // optional
+        })
+   );
+</pre>
+
+<p>And all $.ajax-calls to '<a href="http://example.com">http://example.com</a>' will return the mocked response.</p>
+
+<h2>Requires</h2>
+
+<ul>
+<li>jQuery JavaScript Library 1.5+ - <a href="http://jquery.com/">http://jquery.com/</a>; Copyright 2010, John Resig; Dual licensed under the MIT or GPL Version 2 licenses - <a href="http://jquery.org/license">http://jquery.org/license</a>
+</li>
+</ul><h2>License</h2>
+
+<p>Dual licensed under the MIT and GPL licenses.</p>
+
+<ul>
+<li>MIT - <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a>
+</li>
+<li>GNU - <a href="http://www.gnu.org/licenses/gpl-3.0.html">http://www.gnu.org/licenses/gpl-3.0.html</a>
+</li>
+</ul><p>Copyright (c) 2012 Martin Krause (jquery.public.mkrause.info)</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/martinkr">martinkr</a> can be found on <a href="https://github.com/martinkr/jQuery.ajaxMock">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
     </div>
 
-    <h1><a href="https://github.com/martinkr/jQuery.ajaxMock">jQuery.ajaxMock</a>
-      <span class="small">by <a href="https://github.com/martinkr">martinkr</a></span></h1>
-
-    <div class="description">
-      A tiny yet powerful mocking plugin for jQuery 1.5+
-    </div>
-
     
-      <p>jQuery.ajaxMock is a tiny yet powerful mocking plugin for jQuery 1.5+ Just register a fake response (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response. Keep in mind that no real XHRrequests will be made.</p>
-    
-
-    
-      <h2>Dependencies</h2>
-      <p>jQuery 1.5+</p>
-    
-
-    
-      <h2>Install</h2>
-      <p>Register your mock object: // jQuery.ajaxMock.register( URL , {reponseText: "{String} Mocked responseText", statusCode: "{Number} Mocked status code", status: "{String} Mocked status description"} jQuery.ajaxMock.register('http://example.com', // mocked response { responseText:'responseFoo', statusCode:200, status:'OK' } );</p>
-    
-
-    
-      <h2>License</h2>
-      <p>MIT / GPLv3</p>
-    
-
-    
-      <h2>Authors</h2>
-      <p>martin kr (github@mkrause.info)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>martin kr (github@mkrause.info)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/martinkr/jQuery.ajaxMock/zipball/master">zip</a> or
-      <a href="https://github.com/martinkr/jQuery.ajaxMock/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/martinkr/jQuery.ajaxMock</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/martinkr/jQuery.ajaxMock">martinkr/jQuery.ajaxMock</a>
-    </div>
-
-  </div>
-
-</body>
+  </body>
 </html>
