@@ -1,6 +1,6 @@
 {
     "name": "ajaxmock",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "title": "jQuery.ajaxMock - a tiny but yet powerful mocking plugin for jQuery 1.5+",
     "author": {
         "name": "Martin Krause",
@@ -10,8 +10,8 @@
         {
             "type": "MIT",
             "url": "http://opensource.org/licenses/MIT",
-            "type": "LGPL-3.0",
-            "url": "http://opensource.org/licenses/lgpl-3.0.html"
+            "type": "GPL-3.0",
+            "url": "http://www.gnu.org/licenses/gpl-3.0.html"
         }
     ],
     "dependencies": {
