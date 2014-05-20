@@ -1,0 +1,32 @@
+{
+  "name": "jQuery.ajaxMock",
+  "main": "jquery.ajaxmock.min.js",
+  "version": "1.2.1",
+  "homepage": "https://github.com/martinkr/jQuery.ajaxmock",
+  "author": "Martin Krause",
+  "ignore": [
+    "jasmine.spec.js",
+    "*.jquery.json"
+  ],
+  "dependencies": {
+        "jquery": ">=1.5"
+    },
+    "description": "jQuery.ajaxMock is a tiny yet powerful mocking plugin for jQuery 1.5+Just register a fake response  (the mock object) . All subsequent $.ajax calls to registered urls will be incercepted, and their're callbacks will recieve the faked response. Keep in mind that no real XHRrequests will be made. Works like a charm with Jasmine (http://pivotal.github.com/jasmine/) the a behavior-driven development framework for testing JavaScript code.",
+    "keywords": [
+        "ajax",
+        "mock",
+        "test-driven",
+        "behaviour-driven",
+        "jUnit",
+        "jasmine",
+        "spec"
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/MIT",
+            "type": "GPL-3.0",
+            "url": "http://opensource.org/licenses/gpl-3.0.html"
+        }
+    ]
+}
